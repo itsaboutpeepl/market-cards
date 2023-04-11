@@ -10,7 +10,7 @@ part 'marketing_repo.g.dart';
 final dioProvider = Provider(
   (ref) => Dio(
     BaseOptions(
-      baseUrl: 'http://localhost:3333/api/v1',
+      baseUrl: 'https://peepl-marketplace.herokuapp.com/api/v1',
     ),
   ),
 );

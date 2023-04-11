@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:marketing_cards/model/balance_response.dart';
@@ -36,6 +37,7 @@ class PayClickProvider extends StateNotifier<void Function(String productId)> {
   }
 }
 
+@RoutePage()
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({
     super.key,

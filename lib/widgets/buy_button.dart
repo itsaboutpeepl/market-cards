@@ -3,16 +3,31 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:marketing_cards/screens/home_page.dart';
 import 'package:marketing_cards/typography.dart';
 
-class BuyButton extends ConsumerWidget {
+class BuyButton extends ConsumerStatefulWidget {
   const BuyButton({super.key, required this.productId});
 
   final String productId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BuyButton> createState() => _BuyButtonState();
+}
+
+class _BuyButtonState extends ConsumerState<BuyButton> {
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        ref.read(onPayClickProvider).call(productId);
+        ref.read(onPayClickProvider).call(widget.productId);
+        _isLoading = true;
+        Future.delayed(const Duration(seconds: 5), () {
+          if (context.mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+          }
+        });
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.grey[400],
@@ -22,33 +37,14 @@ class BuyButton extends ConsumerWidget {
         ),
         elevation: 5,
       ),
-      child: Text(
-        'Buy Now',
-        style: buttonStyle,
-      ),
-    );
-  }
-}
-
-class BuyButtonCard extends StatelessWidget {
-  const BuyButtonCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
-        fixedSize: const Size(100, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        elevation: 5,
-      ),
-      child: Text(
-        'Buy Now',
-        style: buttonStyle.copyWith(fontSize: 18),
-      ),
+      child: _isLoading
+          ? const CircularProgressIndicator(
+              color: Colors.red,
+            )
+          : Text(
+              'Buy Now',
+              style: buttonStyle,
+            ),
     );
   }
 }

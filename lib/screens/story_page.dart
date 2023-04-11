@@ -8,6 +8,7 @@ import 'package:marketing_cards/widgets/balance_display.dart';
 import 'package:marketing_cards/widgets/bottom_modal_layout.dart';
 import 'package:marketing_cards/widgets/detail_layout.dart';
 
+@RoutePage()
 class StoryPage extends ConsumerStatefulWidget {
   const StoryPage({super.key, required this.storyId});
 

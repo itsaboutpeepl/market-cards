@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:marketing_cards/router/route_logger.dart';
+import 'package:marketing_cards/router/router.dart';
 import 'package:marketing_cards/router/router.gr.dart';
 
 // void main() {
@@ -36,7 +38,7 @@ class MarketingCards extends ConsumerStatefulWidget {
 }
 
 class _MarketingCardsState extends ConsumerState<MarketingCards> {
-  final _appRouter = AppRouter();
+  final _rootRouter = RootRouter();
 
   @override
   void initState() {
@@ -50,17 +52,9 @@ class _MarketingCardsState extends ConsumerState<MarketingCards> {
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
         title: 'Marketing Cards',
-        routerDelegate: _appRouter.delegate(
-          initialRoutes: [
-            MyHomeRoute(
-              appName: widget.appName,
-              onBack: widget.onBack,
-              pplBalance: widget.pplBalance,
-              onPayClick: widget.onPayClick,
-            )
-          ],
+        routerConfig: _rootRouter.config(
+          navigatorObservers: () => [RouteLogger()],
         ),
-        routeInformationParser: _appRouter.defaultRouteParser(),
       ),
     );
   }
